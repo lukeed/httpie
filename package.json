@@ -2,7 +2,7 @@
   "name": "httpie",
   "version": "0.0.0",
   "repository": "lukeed/httpie",
-  "description": "WIP",
+  "description": "A lightweight, Promise-based wrapper for Node.js HTTP requests~!",
   "module": "dist/httpie.mjs",
   "main": "dist/httpie.js",
   "license": "MIT",

@@ -30,8 +30,9 @@ export function send(method, uri, opts={}) {
 		req.on('error', rej);
 
 		if (opts.body) {
-			let str = JSON.stringify(opts.body);
-			req.setHeader('content-type', 'application/json');
+			let isObj = typeof opts.body === 'object';
+			let str = isObj ? JSON.stringify(opts.body) : opts.body;
+			isObj && req.setHeader('content-type', 'application/json');
 			req.setHeader('content-length', Buffer.byteLength(str));
 			req.write(str);
 		}

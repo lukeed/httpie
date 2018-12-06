@@ -23,7 +23,16 @@ export function send(method, uri, opts={}) {
 					out = JSON.parse(out);
 				}
 				r.data = out;
-				(r.statusCode >= 400 ? rej : res)(r);
+				if (r.statusCode >= 400) {
+					let err = new Error(r.statusMessage);
+					err.statusMessage = r.statusMessage;
+					err.statusCode = r.statusCode;
+					err.headers = r.headers;
+					err.data = r.data;
+					rej(err);
+				} else {
+					res(r);
+				}
 			});
 		});
 

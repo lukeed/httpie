@@ -5,10 +5,10 @@ import { globalAgent } from 'http';
 export function send(method, uri, opts={}) {
 	return new Promise((res, rej) => {
 		let out = '';
+		let o = { method };
 		let headers = opts.headers || {};
-		let { protocol, hostname, port, path } = parse(uri);
-		let o = { protocol, path, method, hostname, port, headers };
-		if (protocol === 'http:') o.agent = globalAgent;
+		Object.assign(o, typeof uri === 'string' ? parse(uri) : uri);
+		if (o.protocol === 'http:') o.agent = globalAgent;
 
 		let req = request(o, r => {
 			r.setEncoding('utf8');

@@ -15,7 +15,7 @@
     "node": ">=8"
   },
   "scripts": {
-    "build": "node builder",
+    "build": "bundt",
     "pretest": "npm run build",
     "test": "tape test/*.js | tap-spec"
   },
@@ -29,11 +29,8 @@
     "promise"
   ],
   "devDependencies": {
-    "gzip-size": "^3.0.0",
-    "mk-dirs": "^1.0.0",
-    "pretty-bytes": "^4.0.2",
+    "bundt": "^0.2.0",
     "tap-spec": "^5.0.0",
-    "tape": "^4.9.1",
-    "terser": "^3.10.0"
+    "tape": "^4.9.1"
   }
 }

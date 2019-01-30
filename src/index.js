@@ -1,11 +1,12 @@
-import { parse } from 'url';
 import { request } from 'https';
 import { globalAgent } from 'http';
+import { parse, resolve } from 'url';
 
 export function send(method, uri, opts={}) {
 	return new Promise((res, rej) => {
 		let out = '';
 		let o = { method };
+		let { redirect=true } = opts;
 		let headers = opts.headers || {};
 		Object.assign(o, typeof uri === 'string' ? parse(uri) : uri);
 		if (o.protocol === 'http:') o.agent = globalAgent;
@@ -30,6 +31,9 @@ export function send(method, uri, opts={}) {
 					err.headers = r.headers;
 					err.data = r.data;
 					rej(err);
+				} else if (r.statusCode > 300 && redirect && r.headers.location) {
+					o.path = resolve(o.path, r.headers.location);
+					return send(method, o.path.startsWith('/') ? o : o.path, o).then(res, rej);
 				} else {
 					res(r);
 				}

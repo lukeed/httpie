@@ -104,6 +104,14 @@ Default: `{}`
 
 The custom headers to send with your request.
 
+#### opts.redirect
+Type: `Boolean`<br>
+Default: `true`
+
+Whether or not redirect responses should be followed automatically.
+
+> **Note:** This may only happen with a 3xx status _and_ if the response had a [`Location`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Location) header.
+
 
 ### get(url, opts={})
 > Alias for [`send('GET', url, opts)`](#sendmethod-url-opts).

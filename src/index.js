@@ -7,9 +7,9 @@ export function send(method, uri, opts={}) {
 		let out = '';
 		let o = { method };
 		let { redirect=true } = opts;
-		let headers = opts.headers || {};
 		Object.assign(o, typeof uri === 'string' ? parse(uri) : uri);
 		if (o.protocol === 'http:') o.agent = globalAgent;
+		o.headers = opts.headers || {};
 
 		let req = request(o, r => {
 			r.setEncoding('utf8');

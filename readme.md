@@ -21,7 +21,7 @@
 * `Promise`- based HTTP requestor
 * Works with HTTP and HTTPS protocols
 * Automatically handles JSON requests and responses
-* Extremely lightweight with **no dependencies** – 544 bytes!
+* Extremely lightweight with **no dependencies** – 632 bytes!
 * Includes aliases for common HTTP verbs: `get`, `post`, `put`, `patch`, and `del`
 
 Additionally, this module is delivered as:

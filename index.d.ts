@@ -5,7 +5,8 @@ export interface HttpieOptions {
 	body: any,
 	headers: {
 		[name: string]: string
-	}
+	},
+	redirect: boolean
 }
 
 export interface HttpieResponse<T> extends IncomingMessage {

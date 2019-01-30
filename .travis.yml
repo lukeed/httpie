@@ -2,8 +2,12 @@ language: node_js
 node_js:
   - 8
 
-after_success:
+before_script:
   - npm i -g nyc codecov
+
+script:
   - nyc --include=src npm test
+
+after_success:
   - nyc report --reporter=text-lcov > coverage.lcov
   - codecov

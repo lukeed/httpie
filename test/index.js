@@ -134,3 +134,13 @@ test('POST (string body w/ object url)', async t => {
 		});
 	});
 });
+
+test('custom headers', async t => {
+	t.plan(2);
+	let headers = { 'X-FOO': 'BAR123' };
+	let res = await httpie.get('https://reqres.in/api/users', { headers });
+	let sent = res.req.getHeader('x-foo');
+
+	t.is(res.statusCode, 200, '~> statusCode = 200');
+	t.is(sent, 'BAR123', '~> sent custom "X-FOO" header');
+});

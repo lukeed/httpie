@@ -4,6 +4,6 @@ node_js:
 
 after_success:
   - npm i -g nyc codecov
-  - nyc --exclude=tests npm test
+  - nyc --exclude=test npm test
   - nyc report --reporter=text-lcov > coverage.lcov
   - codecov

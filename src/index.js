@@ -21,7 +21,11 @@ export function send(method, uri, opts={}) {
 			r.on('end', () => {
 				let type = r.headers['content-type'];
 				if (type && type.includes('application/json')) {
-					out = JSON.parse(out);
+					try {
+						out = JSON.parse(out);
+					} catch (_err) {
+						return rej(new Error('Invalid JSON received'));
+					}
 				}
 				r.data = out;
 				if (r.statusCode >= 400) {

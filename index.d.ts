@@ -12,9 +12,10 @@ export interface HttpieResponse<T> extends IncomingMessage {
 	data: string | T,
 }
 
-export function send<T>(method: string, uri: string | Url, opts: HttpieOptions): Promise<HttpieResponse<T>>;
+export declare function send<T>(method: string, uri: string | Url, opts?: HttpieOptions): Promise<HttpieResponse<T>>;
 
-declare function method<T>(uri: string | Url, opts: HttpieOptions): Promise<HttpieResponse<T>>;
+declare function method<T>(uri: string | Url, opts?: HttpieOptions): Promise<HttpieResponse<T>>;
+
 export {
 	method as get,
 	method as post,

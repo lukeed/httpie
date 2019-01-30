@@ -23,9 +23,8 @@ export function send(method, uri, opts={}) {
 				if (type && type.includes('application/json')) {
 					try {
 						out = JSON.parse(out);
-					} catch (_err) {
-						return rej(new Error('Invalid JSON received'));
-					}
+						r.json = true;
+					} catch (_err) {}
 				}
 				r.data = out;
 				if (r.statusCode >= 400) {

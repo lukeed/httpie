@@ -98,9 +98,16 @@ test('DELETE (204)', async t => {
 	t.is(res.data, '');
 });
 
-test('GET (301 HTTPS)', async t => {
-	t.plan(4);
+test('GET (HTTP -> HTTPS)', async t => {
+	t.plan(6);
 	let res = await httpie.get('http://reqres.in/api/users');
+	t.is(res.req.agent.protocol, 'https:', '~> follow-up request with HTTPS');
+	isResponse(t, res, 200);
+});
+
+test('GET (301 = redirect:false)', async t => {
+	t.plan(4);
+	let res = await httpie.get('http://reqres.in/api/users', { redirect:0 });
 	t.is(res.statusCode, 301, '~> statusCode = 301');
 	t.is(res.statusMessage, 'Moved Permanently', '~> "Moved Permanently"');
 	t.is(res.headers.location, 'https://reqres.in/api/users', '~> has "Location" header');

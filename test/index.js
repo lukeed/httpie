@@ -1,6 +1,6 @@
-const test = require('tape');
-const { parse } = require('url');
-const httpie = require('../dist/httpie');
+import test from 'tape';
+import { parse } from 'url';
+import * as httpie from '../src';
 
 // Demo: https://reqres.in/api
 function isResponse(t, res, code, expected) {

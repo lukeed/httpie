@@ -17,7 +17,7 @@
   "scripts": {
     "build": "bundt",
     "pretest": "npm run build",
-    "test": "tape test/*.js | tap-spec"
+    "test": "tape -r esm test/*.js | tap-spec"
   },
   "files": [
     "dist"
@@ -30,6 +30,7 @@
   ],
   "devDependencies": {
     "bundt": "^0.2.0",
+    "esm": "^3.2.0",
     "tap-spec": "^5.0.0",
     "tape": "^4.9.1"
   }

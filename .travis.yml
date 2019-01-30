@@ -4,6 +4,6 @@ node_js:
 
 after_success:
   - npm i -g nyc codecov
-  - nyc --include=dist/httpie.js npm test
+  - nyc --include=src npm test
   - nyc report --reporter=text-lcov > coverage.lcov
   - codecov

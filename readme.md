@@ -9,6 +9,9 @@
   <a href="https://travis-ci.org/lukeed/httpie">
     <img src="https://badgen.now.sh/travis/lukeed/httpie" alt="travis" />
   </a>
+  <a href="https://codecov.io/gh/lukeed/httpie">
+    <img src="https://badgen.now.sh/codecov/c/github/lukeed/httpie" alt="codecov" />
+  </a>
   <a href="https://npmjs.org/package/httpie">
     <img src="https://badgen.now.sh/npm/dm/httpie" alt="downloads" />
   </a>

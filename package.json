@@ -1,6 +1,6 @@
 {
   "name": "httpie",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "repository": "lukeed/httpie",
   "description": "A lightweight, Promise-based wrapper for Node.js HTTP requests~!",
   "module": "dist/httpie.mjs",

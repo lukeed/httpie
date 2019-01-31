@@ -6,11 +6,11 @@ export interface HttpieOptions {
 	headers: {
 		[name: string]: string
 	},
-	redirect: boolean
+	redirect: boolean,
 }
 
-export interface HttpieResponse<T> extends IncomingMessage {
-	data: string | T,
+export interface HttpieResponse<T = any> extends IncomingMessage {
+	data: T,
 }
 
 export declare function send<T>(method: string, uri: string | Url, opts?: HttpieOptions): Promise<HttpieResponse<T>>;

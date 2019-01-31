@@ -5,6 +5,7 @@
   "description": "A lightweight, Promise-based wrapper for Node.js HTTP requests~!",
   "module": "dist/httpie.mjs",
   "main": "dist/httpie.js",
+  "types": "httpie.d.ts",
   "license": "MIT",
   "author": {
     "name": "Luke Edwards",
@@ -20,6 +21,7 @@
     "test": "tape -r esm test/*.js | tap-spec"
   },
   "files": [
+    "*.d.ts",
     "dist"
   ],
   "keywords": [

@@ -13,9 +13,9 @@ export interface HttpieResponse<T = any> extends IncomingMessage {
 	data: T,
 }
 
-export declare function send<T>(method: string, uri: string | Url, opts?: HttpieOptions): Promise<HttpieResponse<T>>;
+export declare function send<T>(method: string, uri: string | Url, opts?: Partial<HttpieOptions>): Promise<HttpieResponse<T>>;
 
-declare function method<T>(uri: string | Url, opts?: HttpieOptions): Promise<HttpieResponse<T>>;
+declare function method<T>(uri: string | Url, opts?: Partial<HttpieOptions>): Promise<HttpieResponse<T>>;
 
 export {
 	method as get,

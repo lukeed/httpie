@@ -5,14 +5,12 @@ import { parse, resolve } from 'url';
 export function send(method, uri, opts={}) {
 	return new Promise((res, rej) => {
 		let out = '';
-		let o = { method };
+		opts.method = method;
 		let { redirect=true } = opts;
-		Object.assign(o, typeof uri === 'string' ? parse(uri) : uri);
-		if (o.protocol === 'http:') o.agent = globalAgent;
-		o.headers = opts.headers || {};
-		o.reviver = opts.reviver;
+		Object.assign(opts, typeof uri === 'string' ? parse(uri) : uri);
+		opts.agent = opts.protocol === 'http:' ? globalAgent : void 0;
 
-		let req = request(o, r => {
+		let req = request(opts, r => {
 			r.setEncoding('utf8');
 
 			r.on('data', d => {
@@ -22,7 +20,7 @@ export function send(method, uri, opts={}) {
 			r.on('end', () => {
 				let type = r.headers['content-type'];
 				if (type && out && type.includes('application/json')) {
-					out = JSON.parse(out, o.reviver);
+					out = JSON.parse(out, opts.reviver);
 				}
 				r.data = out;
 				if (r.statusCode >= 400) {
@@ -33,8 +31,8 @@ export function send(method, uri, opts={}) {
 					err.data = r.data;
 					rej(err);
 				} else if (r.statusCode > 300 && redirect && r.headers.location) {
-					o.path = resolve(o.path, r.headers.location);
-					return send(method, o.path.startsWith('/') ? o : o.path, o).then(res, rej);
+					opts.path = resolve(opts.path, r.headers.location);
+					return send(method, opts.path.startsWith('/') ? opts : opts.path, opts).then(res, rej);
 				} else {
 					res(r);
 				}

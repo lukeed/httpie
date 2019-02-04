@@ -144,3 +144,32 @@ test('custom headers', async t => {
 	t.is(res.statusCode, 200, '~> statusCode = 200');
 	t.is(sent, 'BAR123', '~> sent custom "X-FOO" header');
 });
+
+function reviver(key, val) {
+	if (key.includes('_')) return; // removes
+	return typeof val === 'number' ? String(val) : val;
+}
+
+test('GET (reviver)', async t => {
+	t.plan(5);
+	let res = await httpie.get('https://reqres.in/api/users', { reviver });
+	t.is(res.statusCode, 200, '~> statusCode = 200');
+
+	t.is(res.data.per_page, undefined, '~> removed "per_page" key');
+	t.is(typeof res.data.page, 'string', '~> converted numbers to strings');
+	t.is(res.data.data[1].first_name, undefined, `~> (deep) removed "first_name" key`);
+	t.is(typeof res.data.data[1].id, 'string', `~> (deep) converted numbers to strings`);
+});
+
+test('GET (reviver w/ redirect)', async t => {
+	t.plan(6);
+	let res = await httpie.get('http://reqres.in/api/users', { reviver });
+	t.is(res.req.agent.protocol, 'https:', '~> follow-up request with HTTPS');
+	t.is(res.statusCode, 200, '~> statusCode = 200');
+
+	t.is(res.data.per_page, undefined, '~> removed "per_page" key');
+	t.is(typeof res.data.page, 'string', '~> converted numbers to strings');
+	t.is(res.data.data[1].first_name, undefined, `~> (deep) removed "first_name" key`);
+	t.is(typeof res.data.data[1].id, 'string', `~> (deep) converted numbers to strings`);
+	t.end();
+});

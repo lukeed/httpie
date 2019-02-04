@@ -10,6 +10,7 @@ export function send(method, uri, opts={}) {
 		Object.assign(o, typeof uri === 'string' ? parse(uri) : uri);
 		if (o.protocol === 'http:') o.agent = globalAgent;
 		o.headers = opts.headers || {};
+		o.reviver = opts.reviver;
 
 		let req = request(o, r => {
 			r.setEncoding('utf8');
@@ -21,7 +22,7 @@ export function send(method, uri, opts={}) {
 			r.on('end', () => {
 				let type = r.headers['content-type'];
 				if (type && out && type.includes('application/json')) {
-					out = JSON.parse(out, opts.reviver);
+					out = JSON.parse(out, o.reviver);
 				}
 				r.data = out;
 				if (r.statusCode >= 400) {

@@ -7,6 +7,7 @@ export interface HttpieOptions {
 		[name: string]: string
 	},
 	redirect: boolean,
+	reviver: (key: string, value: any) => any,
 }
 
 export interface HttpieResponse<T = any> extends IncomingMessage {

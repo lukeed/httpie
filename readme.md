@@ -115,6 +115,13 @@ Whether or not redirect responses should be followed automatically.
 
 > **Note:** This may only happen with a 3xx status _and_ if the response had a [`Location`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Location) header.
 
+#### opts.reviver
+Type: `Function`<br>
+Default: `undefined`
+
+An optional function that's passed directly to [`JSON.parse`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Parameters), allowing you transform aspects of the response data before the `httpie` request resolves.
+
+> **Note:** This will _only_ run if `httpie` detects that JSON is contained in the response!
 
 ### get(url, opts={})
 > Alias for [`send('GET', url, opts)`](#sendmethod-url-opts).

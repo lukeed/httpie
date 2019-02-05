@@ -58,3 +58,4 @@ export const post = send.bind(null, 'POST');
 export const patch = send.bind(null, 'PATCH');
 export const del = send.bind(null, 'DELETE');
 export const put = send.bind(null, 'PUT');
+export const head = send.bind(null, 'HEAD');

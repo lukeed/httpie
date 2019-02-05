@@ -24,4 +24,5 @@ export {
 	method as patch,
 	method as del,
 	method as put,
+	method as head,
 };

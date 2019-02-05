@@ -42,6 +42,25 @@ test('GET (404)', async t => {
 	}
 });
 
+test('HEAD (200)', async t => {
+	t.plan(5);
+	let res = await httpie.get('https://reqres.in/api/users/2');
+	isResponse(t, res, 200);
+});
+
+test('HEAD (404)', async t => {
+	t.plan(8);
+	try {
+		await httpie.get('https://reqres.in/api/users/23');
+		t.pass('i will not run');
+	} catch (err) {
+		t.true(err instanceof Error, '~> returns a true Error instance');
+		t.is(err.message, err.statusMessage, '~> the "message" and "statusMessage" are identical');
+		t.is(err.message, 'Not Found', '~~> Not Found');
+		isResponse(t, err, 404);
+	}
+});
+
 test('POST 201', async t => {
 	t.plan(9);
 

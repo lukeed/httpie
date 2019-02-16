@@ -10,7 +10,12 @@ export function send(method, uri, opts={}) {
 		Object.assign(opts, typeof uri === 'string' ? parse(uri) : uri);
 		opts.agent = opts.protocol === 'http:' ? globalAgent : void 0;
 
-		let req = request(opts, r => {
+		if (opts.timeout) {
+			opts.timer = setTimeout(() => opts.req.abort(), opts.timeout);
+			delete opts.timeout;
+		}
+
+		let req = opts.req = request(opts, r => {
 			r.setEncoding('utf8');
 
 			r.on('data', d => {
@@ -24,6 +29,7 @@ export function send(method, uri, opts={}) {
 				}
 				r.data = out;
 				if (r.statusCode >= 400) {
+					clearTimeout(opts.timer);
 					let err = new Error(r.statusMessage);
 					err.statusMessage = r.statusMessage;
 					err.statusCode = r.statusCode;
@@ -32,14 +38,19 @@ export function send(method, uri, opts={}) {
 					rej(err);
 				} else if (r.statusCode > 300 && redirect && r.headers.location) {
 					opts.path = resolve(opts.path, r.headers.location);
-					return send(method, opts.path.startsWith('/') ? opts : opts.path, opts).then(res, rej);
+					send(method, opts.path.startsWith('/') ? opts : opts.path, opts).then(res, rej);
 				} else {
+					clearTimeout(opts.timer);
 					res(r);
 				}
 			});
 		});
 
-		req.on('error', rej);
+		req.on('error', err => {
+			// Node 11.x ~> boolean, else timestamp
+			err.aborted = req.aborted;
+			rej(err);
+		});
 
 		if (opts.body) {
 			let isObj = typeof opts.body === 'object' && !Buffer.isBuffer(opts.body);

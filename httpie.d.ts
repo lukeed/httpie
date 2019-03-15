@@ -1,4 +1,4 @@
-import {Url} from "url";
+import {Url, URL} from "url";
 import {IncomingMessage} from "http";
 
 export interface HttpieOptions {
@@ -14,9 +14,9 @@ export interface HttpieResponse<T = any> extends IncomingMessage {
 	data: T,
 }
 
-export declare function send<T = any>(method: string, uri: string | Url, opts?: Partial<HttpieOptions>): Promise<HttpieResponse<T>>;
+export declare function send<T = any>(method: string, uri: string | Url | URL, opts?: Partial<HttpieOptions>): Promise<HttpieResponse<T>>;
 
-declare function method<T = any>(uri: string | Url, opts?: Partial<HttpieOptions>): Promise<HttpieResponse<T>>;
+declare function method<T = any>(uri: string | Url | URL, opts?: Partial<HttpieOptions>): Promise<HttpieResponse<T>>;
 
 export {
 	method as get,

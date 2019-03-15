@@ -7,6 +7,7 @@ export function send(method, uri, opts={}) {
 		let out = '';
 		opts.method = method;
 		let { redirect=true } = opts;
+		if (uri && !!uri.toJSON) uri = uri.toJSON();
 		Object.assign(opts, typeof uri === 'string' ? parse(uri) : uri);
 		opts.agent = opts.protocol === 'http:' ? globalAgent : void 0;
 

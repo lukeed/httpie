@@ -1,5 +1,5 @@
 import test from 'tape';
-import { parse } from 'url';
+import { parse, URL } from 'url';
 import * as httpie from '../src';
 
 // Demo: https://reqres.in/api
@@ -172,4 +172,18 @@ test('GET (reviver w/ redirect)', async t => {
 	t.is(res.data.data[1].first_name, undefined, `~> (deep) removed "first_name" key`);
 	t.is(typeof res.data.data[1].id, 'string', `~> (deep) converted numbers to strings`);
 	t.end();
+});
+
+test('via Url (legacy)', async t => {
+	t.plan(5);
+	let foo = parse('https://reqres.in/api/users/2');
+	let res = await httpie.get(foo);
+	isResponse(t, res, 200);
+});
+
+test('via URL (WHATWG)', async t => {
+	t.plan(5);
+	let foo = new URL('https://reqres.in/api/users/2');
+	let res = await httpie.get(foo);
+	isResponse(t, res, 200);
 });

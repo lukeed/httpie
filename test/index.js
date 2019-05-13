@@ -1,6 +1,7 @@
 import test from 'tape';
 import { parse, URL } from 'url';
 import * as httpie from '../src';
+import server from './server';
 
 // Demo: https://reqres.in/api
 function isResponse(t, res, code, expected) {
@@ -43,11 +44,11 @@ test('GET (404)', async t => {
 		t.true(err instanceof Error, '~> returns a true Error instance');
 		t.is(err.message, err.statusMessage, '~> the "message" and "statusMessage" are identical');
 		t.is(err.message, 'Not Found', '~~> Not Found');
-		isResponse(t, err, 404, {});
+		isResponse(t, err, 404, {}); // +6
 	}
 });
 
-test('POST 201', async t => {
+test('POST (201)', async t => {
 	t.plan(9);
 
 	let body = {
@@ -191,4 +192,21 @@ test('via URL (WHATWG)', async t => {
 	let foo = new URL('https://reqres.in/api/users/2');
 	let res = await httpie.get(foo);
 	isResponse(t, res, 200);
+});
+
+test('Error: Invalid JSON', async t => {
+	t.plan(7);
+	let ctx = await server();
+	await httpie.get(`http://localhost:${ctx.port}/any`).catch(err => {
+		t.true(err instanceof SyntaxError, '~> caught SyntaxError');
+		t.true(err.message.includes('Unexpected token'), '~> had "Unexpected token" message');
+		t.true(err.stack.includes('JSON.parse'), '~> printed `JSON.parse` in stack');
+
+		t.is(err.statusCode, 200, `~> statusCode = 200`);
+		t.ok(err.headers['content-type'], `~> headers['content-type'] exists`);
+		t.ok(err.headers['content-length'], `~> headers['content-length'] exists`);
+		t.is(err.data, undefined, '~> err.data is undefined');
+
+		ctx.close();
+	});
 });

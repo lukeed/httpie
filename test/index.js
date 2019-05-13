@@ -213,7 +213,7 @@ test('Error: Invalid JSON', async t => {
 
 test('Error: Request timed out', async t => {
 	t.plan(7);
-	await httpie.get(`https://reqres.in/api/any`, { timeout: 1 }).catch(err => {
+	await httpie.get('https://reqres.in/api/any', { timeout: 1 }).catch(err => {
 		t.true(err instanceof Error, '~> caught Request timed out');
 		t.true(err.message.includes('Request timed out'), '~> had "Request timed out" message');
 	});

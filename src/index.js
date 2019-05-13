@@ -2,6 +2,15 @@ import { request } from 'https';
 import { globalAgent } from 'http';
 import { parse, resolve } from 'url';
 
+function toError(rej, res, err) {
+	err = err || new Error(res.statusMessage);
+	err.statusMessage = res.statusMessage;
+	err.statusCode = res.statusCode;
+	err.headers = res.headers;
+	err.data = res.data;
+	rej(err);
+}
+
 export function send(method, uri, opts={}) {
 	return new Promise((res, rej) => {
 		let out = '';
@@ -24,17 +33,12 @@ export function send(method, uri, opts={}) {
 					try {
 						out = JSON.parse(out, opts.reviver);
 					} catch (err) {
-						return rej(err);
+						return toError(rej, r, err);
 					}
 				}
 				r.data = out;
 				if (r.statusCode >= 400) {
-					let err = new Error(r.statusMessage);
-					err.statusMessage = r.statusMessage;
-					err.statusCode = r.statusCode;
-					err.headers = r.headers;
-					err.data = r.data;
-					rej(err);
+					toError(rej, r);
 				} else if (r.statusCode > 300 && redirect && r.headers.location) {
 					opts.path = resolve(opts.path, r.headers.location);
 					return send(method, opts.path.startsWith('/') ? opts : opts.path, opts).then(res, rej);

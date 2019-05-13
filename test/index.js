@@ -24,9 +24,14 @@ test('exports', t => {
 });
 
 test('GET (200)', async t => {
-	t.plan(6);
+	t.plan(8);
 	let res = await httpie.get('https://reqres.in/api/users/2');
-	isResponse(t, res, 200, {"data":{"id":2,"first_name":"Janet","last_name":"Weaver","avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg"}});
+	isResponse(t, res, 200);
+
+	let data = res.data;
+	t.ok(!!data.data, '~~> had "data" key');
+	t.is(data.data.id, 2, '~~> had "data.id" value');
+	t.is(data.data.first_name, 'Janet', '~~> had "data.first_name" value');
 });
 
 test('GET (404)', async t => {

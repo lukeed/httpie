@@ -48,6 +48,11 @@ export function send(method, uri, opts={}) {
 			});
 		});
 
+		req.on('timeout', () => {
+			req.abort();
+			rej(new Error('Request timed out'));
+		});
+
 		req.on('error', rej);
 
 		if (opts.body) {

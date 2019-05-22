@@ -62,8 +62,8 @@ export function send(method, uri, opts={}) {
 	});
 }
 
-export const get = send.bind(null, 'GET');
-export const post = send.bind(null, 'POST');
-export const patch = send.bind(null, 'PATCH');
-export const del = send.bind(null, 'DELETE');
-export const put = send.bind(null, 'PUT');
+export const get = send.bind(send, 'GET');
+export const post = send.bind(send, 'POST');
+export const patch = send.bind(send, 'PATCH');
+export const del = send.bind(send, 'DELETE');
+export const put = send.bind(send, 'PUT');

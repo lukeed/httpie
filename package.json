@@ -3,6 +3,8 @@
   "version": "1.1.2",
   "repository": "lukeed/httpie",
   "description": "A lightweight, Promise-based wrapper for Node.js HTTP requests~!",
+  "browser": "dist/httpie.esm.js",
+  "unpkg": "dist/httpie.min.js",
   "module": "dist/httpie.mjs",
   "main": "dist/httpie.js",
   "types": "httpie.d.ts",
@@ -16,7 +18,9 @@
     "node": ">=8"
   },
   "scripts": {
-    "build": "bundt",
+    "build": "npm run build:node && npm run build:client",
+    "build:client": "bundt src/browser.js --unpkg --browser",
+    "build:node": "bundt src/index.js --main --module",
     "pretest": "npm run build",
     "test": "tape -r esm test/*.js | tap-spec"
   },
@@ -31,7 +35,7 @@
     "promise"
   ],
   "devDependencies": {
-    "bundt": "^0.2.0",
+    "bundt": "^0.4.0",
     "esm": "^3.2.0",
     "tap-spec": "^5.0.0",
     "tape": "^4.9.1"

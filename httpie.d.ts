@@ -8,6 +8,7 @@ export interface HttpieOptions {
 	},
 	redirect: boolean,
 	reviver: (key: string, value: any) => any,
+	timeout: number,
 }
 
 export interface HttpieResponse<T = any> extends IncomingMessage {

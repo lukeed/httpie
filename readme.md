@@ -123,6 +123,19 @@ An optional function that's passed directly to [`JSON.parse`](https://developer.
 
 > **Note:** This will _only_ run if `httpie` detects that JSON is contained in the response!
 
+#### opts.timeout
+Type: `Integer`<br>
+Default: `undefined`
+
+The time, in milliseconds, before automatically terminating the request.
+
+When the request exceeds this limit, `httpie` rejects with an `err<Error>`, adding a truthy `err.timeout` value.
+
+> **Important:** There is a slight behavioral difference between the Node & browser versions!<br>
+In the server, the `timeout` value _does not propagate_ to any redirects.<br>
+In the browser, the `timeout` value _will not_ reset during redirects.
+
+
 ### get(url, opts={})
 > Alias for [`send('GET', url, opts)`](#sendmethod-url-opts).
 
@@ -148,6 +161,8 @@ All responses with `statusCode >= 400` will result in a rejected `httpie` reques
 * `err.statusCode` – `Number` – The response's `statusCode` value;
 * `err.headers` – `Object` – The response's `headers` object;
 * `err.data` – `Mixed` – The response's payload;
+
+Additionally, errors that are a result of a timeout expiration will have a truthy `err.timeout` value.
 
 > **Important:** The error's `data` property may also be parsed to a JSON object, according to the response's headers.
 

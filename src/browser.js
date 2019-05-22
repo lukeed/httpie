@@ -9,12 +9,17 @@ export function send(method, uri, opts) {
 	return new Promise((res, rej) => {
 		opts = opts || {};
 		var k, str, tmp, arr;
-		var headers = opts.headers || {};
 		var req = new XMLHttpRequest;
+		var headers = opts.headers || {};
+
+		req.timeout = opts.timeout;
+		req.ontimeout = req.onerror = function (err) {
+			err.timeout = err.type == 'timeout';
+			rej(err);
+		}
 
 		req.open(method, uri);
 
-		req.onerror = rej;
 		req.onload = function () {
 			arr = req.getAllResponseHeaders().trim().split(/[\r\n]+/);
 			apply(req, req); //=> req.headers

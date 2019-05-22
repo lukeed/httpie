@@ -48,7 +48,12 @@ export function send(method, uri, opts={}) {
 			});
 		});
 
-		req.on('error', rej);
+		req.on('timeout', req.abort);
+		req.on('error', err => {
+			// Node 11.x ~> boolean, else timestamp
+			err.timeout = req.aborted;
+			rej(err);
+		});
 
 		if (opts.body) {
 			let isObj = typeof opts.body === 'object' && !Buffer.isBuffer(opts.body);

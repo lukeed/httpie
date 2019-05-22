@@ -5,8 +5,8 @@ function apply(src, tar) {
 	tar.data = src.response;
 }
 
-export function send(method, uri, opts) {
-	return new Promise((res, rej) => {
+exports.send = function send(method, uri, opts) {
+	return new Promise(function (res, rej) {
 		opts = opts || {};
 		var k, str, tmp, arr;
 		var req = new XMLHttpRequest;
@@ -58,8 +58,8 @@ export function send(method, uri, opts) {
 	});
 }
 
-export var get = send.bind(send, 'GET');
-export var post = send.bind(send, 'POST');
-export var patch = send.bind(send, 'PATCH');
-export var del = send.bind(send, 'DELETE');
-export var put = send.bind(send, 'PUT');
+exports.get = send.bind(send, 'GET');
+exports.post = send.bind(send, 'POST');
+exports.patch = send.bind(send, 'PATCH');
+exports.del = send.bind(send, 'DELETE');
+exports.put = send.bind(send, 'PUT');

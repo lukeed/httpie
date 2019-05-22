@@ -6,7 +6,7 @@ function apply(src, tar) {
 }
 
 export function send(method, uri, opts) {
-	return new Promise((res, rej) => {
+	return new Promise(function (res, rej) {
 		opts = opts || {};
 		var k, str, tmp, arr;
 		var req = new XMLHttpRequest;

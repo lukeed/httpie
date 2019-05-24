@@ -47,7 +47,6 @@ export function send(method, uri, opts) {
 				headers['content-type'] = 'application/json';
 				str = JSON.stringify(str);
 			}
-			headers['content-length'] = str.length;
 		}
 
 		for (k in headers) {

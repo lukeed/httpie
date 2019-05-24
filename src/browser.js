@@ -42,11 +42,9 @@ export function send(method, uri, opts) {
 			(req.status >= 400 ? rej : res)(req);
 		};
 
-		if (str = opts.body) {
-			if (/Array|Object/.test(str.constructor.name)) {
-				headers['content-type'] = 'application/json';
-				str = JSON.stringify(str);
-			}
+		if ((str = opts.body) && /Array|Object/.test(str.constructor)) {
+			headers['content-type'] = 'application/json';
+			str = JSON.stringify(str);
 		}
 
 		for (k in headers) {

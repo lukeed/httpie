@@ -12,7 +12,8 @@ export function send(method, uri, opts) {
 		var req = new XMLHttpRequest;
 		var headers = opts.headers || {};
 
-		req.timeout = opts.timeout;
+		// IE compatible
+		if (opts.timeout) req.timeout = opts.timeout;
 		req.ontimeout = req.onerror = function (err) {
 			err.timeout = err.type == 'timeout';
 			rej(err);

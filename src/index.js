@@ -21,8 +21,6 @@ export function send(method, uri, opts={}) {
 		opts.agent = opts.protocol === 'http:' ? globalAgent : void 0;
 
 		let req = request(opts, r => {
-			r.setEncoding('utf8');
-
 			r.on('data', d => {
 				out += d;
 			});

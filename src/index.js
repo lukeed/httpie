@@ -21,6 +21,11 @@ export function send(method, uri, opts={}) {
 		opts.agent = opts.protocol === 'http:' ? globalAgent : void 0;
 
 		let req = request(opts, r => {
+			if (r.statusCode > 300 && redirect && r.headers.location) {
+				opts.path = resolve(opts.path, r.headers.location);
+				return send(method, opts.path.startsWith('/') ? opts : opts.path, opts).then(res, rej);
+			}
+
 			r.on('data', d => {
 				out += d;
 			});
@@ -37,9 +42,6 @@ export function send(method, uri, opts={}) {
 				r.data = out;
 				if (r.statusCode >= 400) {
 					toError(rej, r);
-				} else if (r.statusCode > 300 && redirect && r.headers.location) {
-					opts.path = resolve(opts.path, r.headers.location);
-					return send(method, opts.path.startsWith('/') ? opts : opts.path, opts).then(res, rej);
 				} else {
 					res(r);
 				}

@@ -43,7 +43,7 @@ export function send(method, uri, opts) {
 			(req.status >= 400 ? rej : res)(req);
 		};
 
-		if ((str = opts.body) && /Array|Object/.test(str.constructor)) {
+		if ((str = opts.body) && typeof str == 'object') {
 			headers['content-type'] = 'application/json';
 			str = JSON.stringify(str);
 		}

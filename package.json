@@ -1,6 +1,6 @@
 {
   "name": "httpie",
-  "version": "2.0.0-next.3",
+  "version": "2.0.0-next.4",
   "repository": "lukeed/httpie",
   "description": "A lightweight, Promise-based wrapper for Node.js HTTP requests~!",
   "browser": "dist/httpie.esm.js",
@@ -12,7 +12,7 @@
   "author": {
     "name": "Luke Edwards",
     "email": "luke.edwards05@gmail.com",
-    "url": "lukeed.com"
+    "url": "https://lukeed.com"
   },
   "engines": {
     "node": ">=8"

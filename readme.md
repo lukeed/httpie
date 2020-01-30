@@ -135,6 +135,16 @@ When the request exceeds this limit, `httpie` rejects with an `err<Error>`, addi
 In the server, the `timeout` value _does not propagate_ to any redirects.<br>
 In the browser, the `timeout` value _will not_ reset during redirects.
 
+#### opts.withCredentials
+Type: `Boolean`<br>
+Default: `false`
+
+Whether or not cross-site requests should include credentials (such as cookies).<br>
+This value is passed directly to [`XMLHttpRequest.withCredentials`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials).
+
+**Important**: This is for the **browser version** only!
+
+
 
 ### get(url, opts={})
 > Alias for [`send('GET', url, opts)`](#sendmethod-url-opts).

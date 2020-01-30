@@ -48,6 +48,8 @@ export function send(method, uri, opts) {
 			str = JSON.stringify(str);
 		}
 
+		req.withCredentials = !!opts.withCredentials;
+
 		for (k in headers) {
 			req.setRequestHeader(k, headers[k]);
 		}

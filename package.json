@@ -1,6 +1,6 @@
 {
   "name": "httpie",
-  "version": "2.0.0-next.5",
+  "version": "2.0.0-next.6",
   "repository": "lukeed/httpie",
   "description": "A lightweight, Promise-based wrapper for Node.js HTTP requests~!",
   "browser": "dist/index.esm.js",

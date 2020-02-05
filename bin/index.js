@@ -32,9 +32,9 @@ async function mode(filename, args, altDir) {
 	await premove('dist');
 
 	// Build modes (order matters)
-	await mode('src/index.js', ['--module', '--main']);
-	await mode('src/browser.js', ['--browser', '--unpkg']);
 	await mode('src/fetch.js', ['--module', '--main', '--unpkg'], 'fetch');
+	await mode('src/browser.js', ['--browser', '--unpkg']);
+	await mode('src/index.js', ['--module', '--main']);
 })().catch(err => {
 	console.error('ERROR:', err);
 	process.exit(1);

@@ -3,4 +3,6 @@ node_modules
 *-lock.json
 *.lock
 *.log
-dist
+
+/dist
+/fetch

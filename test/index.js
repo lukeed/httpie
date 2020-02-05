@@ -210,3 +210,18 @@ test('Error: Invalid JSON', async t => {
 		ctx.close();
 	});
 });
+
+test('Error: timeout', async t => {
+	t.plan(7);
+
+	await httpie.send('GET', 'https://reqres.in/api/users?delay=3', { timeout:1000 }).catch(err => {
+		t.true(err instanceof Error, '~> caught Error');
+		t.is(err.message, 'socket hang up', '~> had "socket hang up" message');
+		t.true(err.timeout !== void 0, '~> added `timeout` property');
+		t.true(err.timeout, '~> `timeout` was true');
+
+		t.is(err.statusCode, undefined, `~> statusCode = undefined`);
+		t.is(err.headers, undefined, `~> headers = undefined`);
+		t.is(err.data, undefined, '~> err.data is undefined');
+	});
+});

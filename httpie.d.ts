@@ -1,11 +1,9 @@
-import {Url, URL} from "url";
-import {IncomingMessage} from "http";
+import { Url, URL } from 'url';
+import { IncomingMessage } from 'http';
 
 export interface HttpieOptions {
 	body: any;
-	headers: {
-		[name: string]: string;
-	};
+	headers: Record<string, string>;
 	redirect: boolean;
 	withCredentials: boolean;
 	reviver: (key: string, value: any) => any;

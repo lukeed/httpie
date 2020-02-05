@@ -13,37 +13,38 @@ function toError(rej, res, err) {
 
 export function send(method, uri, opts={}) {
 	return new Promise((res, rej) => {
-		let out = '';
-		opts.method = method;
+		let req, tmp, out = '';
 		let { redirect=true } = opts;
+		opts.method = method;
+
 		if (uri && !!uri.toJSON) uri = uri.toJSON();
 		Object.assign(opts, typeof uri === 'string' ? parse(uri) : uri);
 		opts.agent = opts.protocol === 'http:' ? globalAgent : void 0;
 
-		let req = request(opts, r => {
-			if (r.statusCode > 300 && redirect && r.headers.location) {
-				opts.path = resolve(opts.path, r.headers.location);
+		req = request(opts, rr => {
+			if (rr.statusCode > 300 && redirect && rr.headers.location) {
+				opts.path = resolve(opts.path, rr.headers.location);
 				return send(method, opts.path.startsWith('/') ? opts : opts.path, opts).then(res, rej);
 			}
 
-			r.on('data', d => {
+			rr.on('data', d => {
 				out += d;
 			});
 
-			r.on('end', () => {
-				let type = r.headers['content-type'];
-				if (type && out && type.includes('application/json')) {
+			rr.on('end', () => {
+				tmp = rr.headers['content-type'];
+				if (tmp && out && tmp.includes('application/json')) {
 					try {
 						out = JSON.parse(out, opts.reviver);
 					} catch (err) {
-						return toError(rej, r, err);
+						return toError(rej, rr, err);
 					}
 				}
-				r.data = out;
-				if (r.statusCode >= 400) {
-					toError(rej, r);
+				rr.data = out;
+				if (rr.statusCode >= 400) {
+					toError(rej, rr);
 				} else {
-					res(r);
+					res(rr);
 				}
 			});
 		});
@@ -56,11 +57,12 @@ export function send(method, uri, opts={}) {
 		});
 
 		if (opts.body) {
-			let isObj = typeof opts.body === 'object' && !Buffer.isBuffer(opts.body);
-			let str = isObj ? JSON.stringify(opts.body) : opts.body;
-			isObj && req.setHeader('content-type', 'application/json');
-			req.setHeader('content-length', Buffer.byteLength(str));
-			req.write(str);
+			tmp = typeof opts.body === 'object' && !Buffer.isBuffer(opts.body);
+			tmp && req.setHeader('content-type', 'application/json');
+			tmp = tmp ? JSON.stringify(opts.body) : opts.body;
+
+			req.setHeader('content-length', Buffer.byteLength(tmp));
+			req.write(tmp);
 		}
 
 		req.end();

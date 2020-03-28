@@ -19,7 +19,7 @@ export function send(method, uri, opts) {
 			rej(err);
 		}
 
-		req.open(method, uri);
+		req.open(method, uri.href || uri);
 
 		req.onload = function () {
 			arr = req.getAllResponseHeaders().trim().split(/[\r\n]+/);

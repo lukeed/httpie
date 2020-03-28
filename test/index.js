@@ -14,9 +14,9 @@ function isResponse(t, res, code, expected) {
 	if (expected) t.same(res.data, expected, '~~> is expected response data!');
 }
 
-test('exports', t => {
+test('(node) exports', t => {
 	t.plan(8);
-	t.is(typeof httpie, 'object', 'exports an Object');
+	t.is(typeof httpie, 'object', 'exports an object');
 	['send', 'get', 'post', 'put', 'patch', 'del'].forEach(k => {
 		t.is(typeof httpie[k], 'function', `~> httpie.${k} is a function`);
 	});
@@ -24,7 +24,7 @@ test('exports', t => {
 	t.true(out instanceof Promise, '~> always returns a Promise!');
 });
 
-test('GET (200)', async t => {
+test('(node) GET (200)', async t => {
 	t.plan(8);
 	let res = await httpie.get('https://reqres.in/api/users/2');
 	isResponse(t, res, 200);
@@ -35,11 +35,11 @@ test('GET (200)', async t => {
 	t.is(data.data.first_name, 'Janet', '~~> had "data.first_name" value');
 });
 
-test('GET (404)', async t => {
+test('(node) GET (404)', async t => {
 	t.plan(9);
 	try {
 		await httpie.get('https://reqres.in/api/users/23');
-		t.pass('i will not run');
+		t.fail('i will not run');
 	} catch (err) {
 		t.true(err instanceof Error, '~> returns a true Error instance');
 		t.is(err.message, err.statusMessage, '~> the "message" and "statusMessage" are identical');
@@ -48,7 +48,7 @@ test('GET (404)', async t => {
 	}
 });
 
-test('POST (201)', async t => {
+test('(node) POST (201)', async t => {
 	t.plan(9);
 
 	let body = {
@@ -65,7 +65,7 @@ test('POST (201)', async t => {
 	t.ok(!!res.data.createdAt, '~~> created item w/ "createdAt" value');
 });
 
-test('PUT (200)', async t => {
+test('(node) PUT (200)', async t => {
 	t.plan(8);
 
 	let body = {
@@ -81,7 +81,7 @@ test('PUT (200)', async t => {
 	t.ok(!!res.data.updatedAt, '~~> created item w/ "updatedAt" value');
 });
 
-test('PATCH (200)', async t => {
+test('(node) PATCH (200)', async t => {
 	t.plan(8);
 
 	let body = {
@@ -97,21 +97,21 @@ test('PATCH (200)', async t => {
 	t.ok(!!res.data.updatedAt, '~~> created item w/ "updatedAt" value');
 });
 
-test('DELETE (204)', async t => {
+test('(node) DELETE (204)', async t => {
 	t.plan(2);
 	let res = await httpie.del('https://reqres.in/api/users/2');
 	t.is(res.statusCode, 204);
 	t.is(res.data, '');
 });
 
-test('GET (HTTP -> HTTPS)', async t => {
+test('(node) GET (HTTP -> HTTPS)', async t => {
 	t.plan(6);
 	let res = await httpie.get('http://reqres.in/api/users');
 	t.is(res.req.agent.protocol, 'https:', '~> follow-up request with HTTPS');
 	isResponse(t, res, 200);
 });
 
-test('GET (301 = redirect:false)', async t => {
+test('(node) GET (301 = redirect:false)', async t => {
 	t.plan(4);
 	let res = await httpie.get('http://reqres.in/api/users', { redirect:0 });
 	t.is(res.statusCode, 301, '~> statusCode = 301');
@@ -120,7 +120,7 @@ test('GET (301 = redirect:false)', async t => {
 	t.is(res.data, '', '~> res.data is empty string');
 });
 
-test('GET (delay)', async t => {
+test('(node) GET (delay)', async t => {
 	t.plan(3);
 	let now = Date.now();
 	let res = await httpie.send('GET', 'https://reqres.in/api/users?delay=5');
@@ -129,7 +129,7 @@ test('GET (delay)', async t => {
 	t.true(Date.now() - now >= 5e3, '~> waited at least 5 seconds');
 });
 
-test('POST (string body w/ object url)', async t => {
+test('(node) POST (string body w/ object url)', async t => {
 	t.plan(7);
 	const body = 'peter@klaven';
 	const uri = parse('https://reqres.in/api/login');
@@ -141,7 +141,7 @@ test('POST (string body w/ object url)', async t => {
 	});
 });
 
-test('custom headers', async t => {
+test('(node) custom headers', async t => {
 	t.plan(2);
 	let headers = { 'X-FOO': 'BAR123' };
 	let res = await httpie.get('https://reqres.in/api/users', { headers });
@@ -156,7 +156,7 @@ function reviver(key, val) {
 	return typeof val === 'number' ? String(val) : val;
 }
 
-test('GET (reviver)', async t => {
+test('(node) GET (reviver)', async t => {
 	t.plan(5);
 	let res = await httpie.get('https://reqres.in/api/users', { reviver });
 	t.is(res.statusCode, 200, '~> statusCode = 200');
@@ -167,7 +167,7 @@ test('GET (reviver)', async t => {
 	t.is(typeof res.data.data[1].id, 'string', `~> (deep) converted numbers to strings`);
 });
 
-test('GET (reviver w/ redirect)', async t => {
+test('(node) GET (reviver w/ redirect)', async t => {
 	t.plan(6);
 	let res = await httpie.get('http://reqres.in/api/users', { reviver });
 	t.is(res.req.agent.protocol, 'https:', '~> follow-up request with HTTPS');
@@ -180,21 +180,21 @@ test('GET (reviver w/ redirect)', async t => {
 	t.end();
 });
 
-test('via Url (legacy)', async t => {
+test('(node) via Url (legacy)', async t => {
 	t.plan(5);
 	let foo = parse('https://reqres.in/api/users/2');
 	let res = await httpie.get(foo);
 	isResponse(t, res, 200);
 });
 
-test('via URL (WHATWG)', async t => {
+test('(node) via URL (WHATWG)', async t => {
 	t.plan(5);
 	let foo = new URL('https://reqres.in/api/users/2');
 	let res = await httpie.get(foo);
 	isResponse(t, res, 200);
 });
 
-test('Error: Invalid JSON', async t => {
+test('(node) Error: Invalid JSON', async t => {
 	t.plan(7);
 	let ctx = await server();
 	await httpie.get(`http://localhost:${ctx.port}/any`).catch(err => {
@@ -211,7 +211,7 @@ test('Error: Invalid JSON', async t => {
 	});
 });
 
-test('Error: timeout', async t => {
+test('(node) Error: timeout', async t => {
 	t.plan(7);
 
 	await httpie.send('GET', 'https://reqres.in/api/users?delay=3', { timeout:1000 }).catch(err => {

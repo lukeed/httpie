@@ -1,18 +1,7 @@
 import test from 'tape';
 import { parse, URL } from 'url';
+import { server, isResponse } from './utils';
 import * as httpie from '../src';
-import server from './server';
-
-// Demo: https://reqres.in/api
-function isResponse(t, res, code, expected) {
-	t.is(res.statusCode, code, `~> statusCode = ${code}`);
-	t.ok(res.headers.etag, `~> headers.etag exists`);
-	t.ok(res.headers['content-type'], `~> headers['content-type'] exists`);
-	t.ok(res.headers['content-length'], `~> headers['content-length'] exists`);
-
-	t.is(Object.prototype.toString.call(res.data), '[object Object]', '~> res.data is an object');
-	if (expected) t.same(res.data, expected, '~~> is expected response data!');
-}
 
 test('(node) exports', t => {
 	t.plan(8);
@@ -25,7 +14,7 @@ test('(node) exports', t => {
 });
 
 test('(node) GET (200)', async t => {
-	t.plan(8);
+	t.plan(7);
 	let res = await httpie.get('https://reqres.in/api/users/2');
 	isResponse(t, res, 200);
 
@@ -36,7 +25,7 @@ test('(node) GET (200)', async t => {
 });
 
 test('(node) GET (404)', async t => {
-	t.plan(9);
+	t.plan(8);
 	try {
 		await httpie.get('https://reqres.in/api/users/23');
 		t.fail('i will not run');
@@ -44,12 +33,12 @@ test('(node) GET (404)', async t => {
 		t.true(err instanceof Error, '~> returns a true Error instance');
 		t.is(err.message, err.statusMessage, '~> the "message" and "statusMessage" are identical');
 		t.is(err.message, 'Not Found', '~~> Not Found');
-		isResponse(t, err, 404, {}); // +6
+		isResponse(t, err, 404, {}); // +5
 	}
 });
 
 test('(node) POST (201)', async t => {
-	t.plan(9);
+	t.plan(8);
 
 	let body = {
     name: 'morpheus',
@@ -66,7 +55,7 @@ test('(node) POST (201)', async t => {
 });
 
 test('(node) PUT (200)', async t => {
-	t.plan(8);
+	t.plan(7);
 
 	let body = {
     name: 'morpheus',
@@ -82,7 +71,7 @@ test('(node) PUT (200)', async t => {
 });
 
 test('(node) PATCH (200)', async t => {
-	t.plan(8);
+	t.plan(7);
 
 	let body = {
     name: 'morpheus',
@@ -105,7 +94,7 @@ test('(node) DELETE (204)', async t => {
 });
 
 test('(node) GET (HTTP -> HTTPS)', async t => {
-	t.plan(6);
+	t.plan(5);
 	let res = await httpie.get('http://reqres.in/api/users');
 	t.is(res.req.agent.protocol, 'https:', '~> follow-up request with HTTPS');
 	isResponse(t, res, 200);
@@ -130,7 +119,7 @@ test('(node) GET (delay)', async t => {
 });
 
 test('(node) POST (string body w/ object url)', async t => {
-	t.plan(7);
+	t.plan(6);
 	const body = 'peter@klaven';
 	const uri = parse('https://reqres.in/api/login');
 	await httpie.post(uri, { body }).catch(err => {
@@ -181,14 +170,14 @@ test('(node) GET (reviver w/ redirect)', async t => {
 });
 
 test('(node) via Url (legacy)', async t => {
-	t.plan(5);
+	t.plan(4);
 	let foo = parse('https://reqres.in/api/users/2');
 	let res = await httpie.get(foo);
 	isResponse(t, res, 200);
 });
 
 test('(node) via URL (WHATWG)', async t => {
-	t.plan(5);
+	t.plan(4);
 	let foo = new URL('https://reqres.in/api/users/2');
 	let res = await httpie.get(foo);
 	isResponse(t, res, 200);

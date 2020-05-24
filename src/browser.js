@@ -5,7 +5,7 @@ function apply(src, tar) {
 	tar.data = src.response;
 }
 
-export function send(method, uri, opts) {
+exports.send = function (method, uri, opts) {
 	return new Promise(function (res, rej) {
 		opts = opts || {};
 		var k, str, tmp, arr;
@@ -58,8 +58,8 @@ export function send(method, uri, opts) {
 	});
 }
 
-export var get = send.bind(send, 'GET');
-export var post = send.bind(send, 'POST');
-export var patch = send.bind(send, 'PATCH');
-export var del = send.bind(send, 'DELETE');
-export var put = send.bind(send, 'PUT');
+exports.get = exports.send.bind(exports.send, 'GET');
+exports.post = exports.send.bind(exports.send, 'POST');
+exports.patch = exports.send.bind(exports.send, 'PATCH');
+exports.del = exports.send.bind(exports.send, 'DELETE');
+exports.put = exports.send.bind(exports.send, 'PUT');

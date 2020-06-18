@@ -2,7 +2,7 @@
   "name": "httpie",
   "version": "2.0.0-next.7",
   "repository": "lukeed/httpie",
-  "description": "A lightweight, Promise-based wrapper for Node.js HTTP requests~!",
+  "description": "A lightweight, Promise-based HTTP client for Node.js and the browser~!",
   "browser": "xhr/index.mjs",
   "unpkg": "xhr/index.min.js",
   "worker": "fetch/index.mjs",

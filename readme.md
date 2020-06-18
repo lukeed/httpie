@@ -7,7 +7,7 @@
     <img src="https://badgen.now.sh/npm/v/httpie" alt="version" />
   </a>
   <a href="https://travis-ci.org/lukeed/httpie">
-    <img src="https://badgen.now.sh/travis/lukeed/httpie" alt="travis" />
+    <img src="https://github.com/lukeed/httpie/workflows/CI/badge.svg" alt="CI" />
   </a>
   <a href="https://codecov.io/gh/lukeed/httpie">
     <img src="https://badgen.now.sh/codecov/c/github/lukeed/httpie" alt="codecov" />
@@ -17,7 +17,7 @@
   </a>
 </div>
 
-<div align="center">A Node.js HTTP client as easy as pie!</div>
+<div align="center">A Node.js and browser HTTP client as easy as pie!</div>
 
 ## Features
 

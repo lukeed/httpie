@@ -2,7 +2,7 @@ import { test } from 'uvu';
 import { parse, URL } from 'url';
 import * as assert from 'uvu/assert';
 import { server, isResponse } from './utils';
-import * as httpie from '../src';
+import * as httpie from '../src/node';
 
 test('exports', () => {
 	assert.type(httpie, 'object');

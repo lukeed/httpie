@@ -41,10 +41,10 @@
   "scripts": {
     "pretest": "npm run build",
     "build": "bundt --main --module --unpkg",
-    "test": "uvu -r esm test -i utils"
+    "test": "uvu -r esm test"
   },
   "modes": {
-    "default": "src/index.js",
+    "default": "src/node.js",
     "fetch": "src/fetch.js",
     "xhr": "src/xhr.js"
   },

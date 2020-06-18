@@ -27,8 +27,8 @@ export function send(method, uri, opts) {
 		timer = setTimeout(ctrl.abort, opts.timeout);
 	}
 
-	return new Promise(function (res, rej) {
-		fetch(uri, opts).then(function (rr, reply) {
+	return new Promise((res, rej) => {
+		fetch(uri, opts).then((rr, reply) => {
 			clearTimeout(timer);
 
 			apply(rr, rr); //=> rr.headers
@@ -38,7 +38,7 @@ export function send(method, uri, opts) {
 			if (!tmp || !~tmp.indexOf('application/json')) {
 				reply(rr);
 			} else {
-				rr.text().then(function (str) {
+				rr.text().then(str => {
 					try {
 						rr.data = JSON.parse(str, opts.reviver);
 						reply(rr);
@@ -48,7 +48,7 @@ export function send(method, uri, opts) {
 					}
 				});
 			}
-		}).catch(function (err) {
+		}).catch(err => {
 			err.timeout = ctrl && ctrl.signal.aborted;
 			rej(err);
 		});

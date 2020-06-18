@@ -1,4 +1,5 @@
 import { createServer } from 'http';
+import * as assert from 'uvu/assert';
 
 function handler(req, res) {
 	res.setHeader('Content-Type', 'application/json');
@@ -14,13 +15,13 @@ export async function server() {
 	});
 }
 
-export function isResponse(t, res, code, expected) {
-	t.is(res.statusCode, code, `~> statusCode = ${code}`);
+export function isResponse(res, code, expected) {
+	assert.is(res.statusCode, code, `~> statusCode = ${code}`);
 
 	const headers = res.headers;
-	t.true(headers != null && typeof headers === 'object', '~> res.headers object exists');
-	t.true(Object.keys(headers).length > 0, '~> res.headers is not empty');
+	assert.ok(headers != null && typeof headers === 'object', '~> res.headers object exists');
+	assert.ok(Object.keys(headers).length > 0, '~> res.headers is not empty');
 
-	t.is(Object.prototype.toString.call(res.data), '[object Object]', '~> res.data is an object');
-	if (expected) t.same(res.data, expected, '~~> is expected response data!');
+	assert.is(Object.prototype.toString.call(res.data), '[object Object]', '~> res.data is an object');
+	if (expected) assert.equal(res.data, expected, '~~> is expected response data!');
 }

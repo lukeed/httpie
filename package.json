@@ -41,7 +41,7 @@
   "scripts": {
     "pretest": "npm run build",
     "build": "bundt --main --module --unpkg",
-    "test": "tape -r esm test/*.js | tap-spec"
+    "test": "uvu -r esm test -i utils"
   },
   "modes": {
     "default": "src/index.js",
@@ -66,8 +66,6 @@
   "devDependencies": {
     "bundt": "1.0.1",
     "esm": "3.2.25",
-    "premove": "1.0.0",
-    "tap-spec": "^5.0.0",
-    "tape": "^4.9.1"
+    "uvu": "0.0.11"
   }
 }

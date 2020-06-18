@@ -12,7 +12,7 @@ test('exports', () => {
 	});
 
 	let out = httpie.send('GET', 'https://www.google.com');
-	assert.instance(out, Promise);
+	assert.instance(out, Promise, '~> returns a Promise');
 });
 
 test('GET (200)', async () => {

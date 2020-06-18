@@ -10,6 +10,26 @@
   "main": "dist/index.js",
   "types": "httpie.d.ts",
   "license": "MIT",
+  "exports": {
+    "./": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "browser": "./xhr/index.mjs",
+      "worker": "./fetch/index.mjs"
+    },
+    "./fetch": {
+      "import": "./fetch/index.mjs",
+      "require": "./fetch/index.js"
+    },
+    "./browser": {
+      "import": "./xhr/index.mjs",
+      "require": "./xhr/index.js"
+    },
+    "./xhr": {
+      "import": "./xhr/index.mjs",
+      "require": "./xhr/index.js"
+    }
+  },
   "author": {
     "name": "Luke Edwards",
     "email": "luke.edwards05@gmail.com",

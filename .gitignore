@@ -1,8 +1,9 @@
 .DS_Store
 node_modules
-*-lock.json
+*-lock.*
 *.lock
 *.log
 
-/dist
 /fetch
+/dist
+/xhr

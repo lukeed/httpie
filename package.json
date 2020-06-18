@@ -3,8 +3,8 @@
   "version": "2.0.0-next.7",
   "repository": "lukeed/httpie",
   "description": "A lightweight, Promise-based wrapper for Node.js HTTP requests~!",
-  "unpkg": "dist/index.min.js",
-  "browser": "dist/index.esm.js",
+  "browser": "xhr/index.mjs",
+  "unpkg": "xhr/index.min.js",
   "worker": "fetch/index.mjs",
   "module": "dist/index.mjs",
   "main": "dist/index.js",
@@ -19,14 +19,20 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "node bin",
     "pretest": "npm run build",
+    "build": "bundt --main --module --unpkg",
     "test": "tape -r esm test/*.js | tap-spec"
+  },
+  "modes": {
+    "default": "src/index.js",
+    "fetch": "src/fetch.js",
+    "xhr": "src/xhr.js"
   },
   "files": [
     "*.d.ts",
     "fetch",
-    "dist"
+    "dist",
+    "xhr"
   ],
   "keywords": [
     "http",
@@ -38,8 +44,8 @@
     "xhr"
   ],
   "devDependencies": {
-    "bundt": "^0.4.0",
-    "esm": "^3.2.0",
+    "bundt": "1.0.1",
+    "esm": "3.2.25",
     "premove": "1.0.0",
     "tap-spec": "^5.0.0",
     "tape": "^4.9.1"

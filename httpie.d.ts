@@ -1,23 +1,26 @@
 declare module 'httpie' {
-	import { Url, URL } from 'url';
-	import { IncomingMessage } from 'http';
+	import { Url } from 'url';
 
-	export interface HttpieOptions {
-		body: any;
-		headers: Record<string, string>;
-		redirect: boolean;
+	// all options, loose fit
+	export interface Options {
+		reviver(key: string, value: any): any;
+		headers: Headers | Record<string, string>;
 		withCredentials: boolean;
-		reviver: (key: string, value: any) => any;
+		redirect: boolean;
 		timeout: number;
+		body: any;
 	}
 
-	export interface HttpieResponse<T = any> extends IncomingMessage {
+	export interface Response<T = any> {
+		headers: Record<string, string>;
+		statusMessage: string;
+		statusCode: number;
 		data: T;
 	}
 
-	export function send<T = any>(method: string, uri: string | Url | URL, opts?: Partial<HttpieOptions>): Promise<HttpieResponse<T>>;
+	export function send<T = any>(method: string, uri: string | Url | URL, opts?: Partial<Options>): Promise<Response<T>>;
 
-	function method<T = any>(uri: string | Url | URL, opts?: Partial<HttpieOptions>): Promise<HttpieResponse<T>>;
+	function method<T = any>(uri: string | Url | URL, opts?: Partial<Options>): Promise<Response<T>>;
 	export { method as get, method as post, method as patch, method as del, method as put };
 }
 

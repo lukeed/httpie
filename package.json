@@ -6,16 +6,20 @@
   "browser": "xhr/index.mjs",
   "unpkg": "xhr/index.min.js",
   "worker": "fetch/index.mjs",
-  "module": "dist/index.mjs",
-  "main": "dist/index.js",
+  "module": "node/index.mjs",
+  "main": "node/index.js",
   "types": "httpie.d.ts",
   "license": "MIT",
   "exports": {
     "./": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
+      "import": "./node/index.mjs",
+      "require": "./node/index.js",
       "browser": "./xhr/index.mjs",
       "worker": "./fetch/index.mjs"
+    },
+    "./node": {
+      "import": "./node/index.mjs",
+      "require": "./node/index.js"
     },
     "./fetch": {
       "import": "./fetch/index.mjs",
@@ -44,14 +48,14 @@
     "test": "uvu -r esm test"
   },
   "modes": {
-    "default": "src/node.js",
     "fetch": "src/fetch.js",
+    "node": "src/node.js",
     "xhr": "src/xhr.js"
   },
   "files": [
     "*.d.ts",
     "fetch",
-    "dist",
+    "node",
     "xhr"
   ],
   "keywords": [

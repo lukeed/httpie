@@ -28,7 +28,7 @@ test('GET (200)', async () => {
 test('GET (404)', async () => {
 	try {
 		await httpie.get('https://reqres.in/api/users/23');
-		assert.ok(false, 'i should not run');
+		assert.unreachable('should have thrown error');
 	} catch (err) {
 		assert.instance(err, Error, '~> returns a true Error instance');
 		assert.is(err.message, err.statusMessage, '~> the "message" and "statusMessage" are identical');

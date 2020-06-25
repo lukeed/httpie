@@ -11,7 +11,7 @@
   "types": "httpie.d.ts",
   "license": "MIT",
   "exports": {
-    "./": {
+    ".": {
       "import": "./node/index.mjs",
       "require": "./node/index.js",
       "browser": "./xhr/index.mjs",

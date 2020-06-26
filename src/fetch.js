@@ -1,5 +1,4 @@
 function apply(src, tar) {
-	tar.headers = src.headers || new Headers;
 	tar.statusMessage = src.statusText;
 	tar.statusCode = src.status;
 	tar.data = src.body;
@@ -43,6 +42,7 @@ export function send(method, uri, opts) {
 						rr.data = JSON.parse(str, opts.reviver);
 						reply(rr);
 					} catch (err) {
+						err.headers = rr.headers;
 						apply(rr, err);
 						rej(err);
 					}

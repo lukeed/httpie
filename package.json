@@ -8,7 +8,7 @@
   "worker": "fetch/index.mjs",
   "module": "node/index.mjs",
   "main": "node/index.js",
-  "types": "httpie.d.ts",
+  "types": "index.d.ts",
   "license": "MIT",
   "exports": {
     ".": {

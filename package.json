@@ -1,6 +1,6 @@
 {
   "name": "httpie",
-  "version": "2.0.0-next.10",
+  "version": "2.0.0-next.11",
   "repository": "lukeed/httpie",
   "description": "A lightweight, Promise-based HTTP client for Node.js and the browser~!",
   "browser": "xhr/index.mjs",

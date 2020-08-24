@@ -32,7 +32,8 @@
     "./xhr": {
       "import": "./xhr/index.mjs",
       "require": "./xhr/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "author": {
     "name": "Luke Edwards",

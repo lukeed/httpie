@@ -8,8 +8,8 @@ function apply(src, tar) {
 export function send(method, uri, opts) {
 	return new Promise(function (res, rej) {
 		opts = opts || {};
-		var k, str, tmp, arr;
 		var req = new XMLHttpRequest;
+		var k, tmp, arr, str=opts.body;
 		var headers = opts.headers || {};
 
 		// IE compatible
@@ -43,7 +43,9 @@ export function send(method, uri, opts) {
 			(req.status >= 400 ? rej : res)(req);
 		};
 
-		if ((str = opts.body) && typeof str == 'object') {
+		if (typeof FormData < 'u' && str instanceof FormData) {
+			// str = opts.body
+		} else if (str && typeof str == 'object') {
 			headers['content-type'] = 'application/json';
 			str = JSON.stringify(str);
 		}

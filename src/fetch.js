@@ -6,14 +6,16 @@ function apply(src, tar) {
 
 export function send(method, uri, opts) {
 	opts = opts || {};
-	var timer, tmp, ctrl;
+	var timer, ctrl, tmp=opts.body;
 
 	opts.method = method;
 	opts.headers = opts.headers || {};
 
-	if (opts.body && typeof opts.body == 'object') {
+	if (tmp instanceof FormData) {
+		// leave it
+	} else if (tmp && typeof tmp == 'object') {
 		opts.headers['content-type'] = 'application/json';
-		opts.body = JSON.stringify(opts.body);
+		opts.body = JSON.stringify(tmp);
 	}
 
 	if (opts.withCredentials) {

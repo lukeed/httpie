@@ -60,8 +60,8 @@ export function send(method, uri, opts) {
 	});
 }
 
-export var get = send.bind(send, 'GET');
-export var post = send.bind(send, 'POST');
-export var patch = send.bind(send, 'PATCH');
-export var del = send.bind(send, 'DELETE');
-export var put = send.bind(send, 'PUT');
+export var get = /*#__PURE__*/ send.bind(send, 'GET');
+export var post = /*#__PURE__*/ send.bind(send, 'POST');
+export var patch = /*#__PURE__*/ send.bind(send, 'PATCH');
+export var del = /*#__PURE__*/ send.bind(send, 'DELETE');
+export var put = /*#__PURE__*/ send.bind(send, 'PUT');

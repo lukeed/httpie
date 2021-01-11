@@ -12,10 +12,10 @@
   "license": "MIT",
   "exports": {
     ".": {
-      "import": "./node/index.mjs",
-      "require": "./node/index.js",
+      "worker": "./fetch/index.mjs",
       "browser": "./xhr/index.mjs",
-      "worker": "./fetch/index.mjs"
+      "import": "./node/index.mjs",
+      "require": "./node/index.js"
     },
     "./node": {
       "import": "./node/index.mjs",

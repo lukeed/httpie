@@ -37,7 +37,10 @@ export function send(method, uri, opts) {
 
 			tmp = rr.headers.get('content-type');
 			if (!tmp || !~tmp.indexOf('application/json')) {
-				reply(rr);
+				rr.text().then(str => {
+					rr.data = str;
+					reply(rr);
+				});
 			} else {
 				rr.text().then(str => {
 					try {

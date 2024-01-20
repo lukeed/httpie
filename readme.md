@@ -9,11 +9,14 @@
   <a href="https://travis-ci.org/lukeed/httpie">
     <img src="https://github.com/lukeed/httpie/workflows/CI/badge.svg" alt="CI" />
   </a>
-  <a href="https://codecov.io/gh/lukeed/httpie">
-    <img src="https://badgen.now.sh/codecov/c/github/lukeed/httpie" alt="codecov" />
+  <a href="https://licenses.dev/npm/httpie">
+    <img src="https://licenses.dev/b/npm/httpie" alt="licenses" />
   </a>
   <a href="https://npmjs.org/package/httpie">
     <img src="https://badgen.now.sh/npm/dm/httpie" alt="downloads" />
+  </a>
+  <a href="https://codecov.io/gh/lukeed/httpie">
+    <img src="https://badgen.now.sh/codecov/c/github/lukeed/httpie" alt="codecov" />
   </a>
 </div>
 
